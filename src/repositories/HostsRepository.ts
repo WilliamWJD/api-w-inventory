@@ -10,6 +10,12 @@ class HostsRepository {
 
         return host;
     }
+
+    async importHosts(data: IHost[]): Promise<void> {
+        await prismaClient.hosts.createMany({
+            data: data
+        })
+    }
 }
 
 export { HostsRepository }

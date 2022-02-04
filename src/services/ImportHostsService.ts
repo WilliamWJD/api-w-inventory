@@ -1,3 +1,4 @@
+import { HostsRepository } from '../repositories/HostsRepository';
 import { ConvertPlanHostsToJson } from '../utils/ConvertPlanHostsToJson';
 
 interface IRequest {
@@ -5,9 +6,10 @@ interface IRequest {
 }
 
 class ImportHostsService {
-    execute({ path }: IRequest) {
+    async execute({ path }: IRequest): Promise<void> {
         const hostsToJson = ConvertPlanHostsToJson(path);
-        console.log(hostsToJson)
+        const hostsRepository = new HostsRepository();
+        await hostsRepository.importHosts(hostsToJson)
         return;
     }
 }

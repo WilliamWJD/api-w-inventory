@@ -7,13 +7,14 @@ class ImportHostsController {
             const importHostsService = new ImportHostsService();
 
             if (req.file) {
-                importHostsService.execute({
+                await importHostsService.execute({
                     path: req.file?.path
                 })
             }
 
             return res.status(201).json({ ok: true })
         } catch (err: any) {
+            console.log(err)
             return res.status(401).json({ error: 'Erro ao importar arquivo' })
         }
     }

@@ -14,9 +14,9 @@ model Hosts {
   patrimony  Int      @id
   hostname   String   @unique
   model      String
-  department String   @unique
-  group      String   @unique
-  user       String   @unique
+  department String
+  group      String
+  user       String
   status     Boolean  @default(false)
   updated_at DateTime @default(now())
 
