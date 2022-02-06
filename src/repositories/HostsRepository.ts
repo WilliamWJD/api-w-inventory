@@ -16,6 +16,11 @@ class HostsRepository {
             data: data
         })
     }
+
+    async listAll(): Promise<Hosts[]> {
+        const hosts = await prismaClient.hosts.findMany();
+        return hosts;
+    }
 }
 
 export { HostsRepository }
