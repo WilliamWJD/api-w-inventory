@@ -1,8 +1,6 @@
 import IHost from '../dtos/IHost';
 import { HostsRepository } from '../repositories/HostsRepository';
 import { ConvertPlanHostsToJson } from '../utils/ConvertPlanHostsToJson';
-import _ from 'lodash';
-
 
 interface IRequest {
     path: string;
@@ -13,9 +11,14 @@ class ImportHostsService {
         const hostsToJson = ConvertPlanHostsToJson(path);
         const hostsRepository = new HostsRepository();
 
-        const otherHosts = await hostsRepository.listAll();
+        let otherHosts = await hostsRepository.listAll()
 
-        // await hostsRepository.importHosts(hostsToJson)
+        const hostsNotInclused = hostsToJson.filter((host: IHost) => !otherHosts.find((otherHost: any) => otherHost.patrimony === host.patrimony))
+
+        console.log(hostsNotInclused)
+
+        await hostsRepository.importHosts(hostsNotInclused)
+
         return;
     }
 }
