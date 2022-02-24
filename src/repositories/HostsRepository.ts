@@ -12,7 +12,7 @@ class HostsRepository {
     }
 
     async importHosts(data: IHost[]): Promise<void> {
-        await prismaClient.hosts.createMany({
+        const hosts = await prismaClient.hosts.createMany({
             data: data
         })
     }
@@ -20,6 +20,29 @@ class HostsRepository {
     async listAll(): Promise<Hosts[]> {
         const hosts = await prismaClient.hosts.findMany();
         return hosts;
+    }
+
+    async findHostById(patrimony: number): Promise<Hosts | undefined> {
+        const host = await prismaClient.hosts.findFirst({
+            where: {
+                patrimony: patrimony
+            }
+        })
+
+        return host || undefined;
+    }
+
+    async checkHost(patrimony: number): Promise<Hosts> {
+        const host = await prismaClient.hosts.update({
+            where: {
+                patrimony: patrimony
+            },
+            data: {
+                status: true
+            }
+        })
+
+        return host
     }
 }
 

@@ -15,8 +15,6 @@ class ImportHostsService {
 
         const hostsNotInclused = hostsToJson.filter((host: IHost) => !otherHosts.find((otherHost: any) => otherHost.patrimony === host.patrimony))
 
-        console.log(hostsNotInclused)
-
         await hostsRepository.importHosts(hostsNotInclused)
 
         return;
